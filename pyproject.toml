@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ibn-battuta"
+version = "0.1.0"
+description = "A Gift Those Who Contemplate the Wonders of Cities and the Marvels of Travelling"
+authors = ["Evgeniy Ivlev"]
+readme = "README.md"
+packages = [{include = "ibn_battuta"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.100.1"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
