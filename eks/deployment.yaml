@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backpacking-map-deployment
+  labels:
+    app: backpacking-map
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backpacking-map
+  template:
+    metadata:
+      labels:
+        app: backpacking-map
+    spec:
+      containers:
+      - name: nginx
+        image: eugene2022/backpacking-map:latest
+        ports:
+        - name: web
+          containerPort: 80
