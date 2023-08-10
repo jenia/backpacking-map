@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: continuous-deployment
+rules:
+- apiGroups: ["apps/v1"]
+  resources: ["deployments"]
+  verbs: ["create", "update", "get", "list", "watch", "patch", "delete"]
+- apiGroups: ["v1"]
+  resources: ["services"]
+  verbs: ["create", "update", "get", "list", "watch", "patch", "delete"]
+- apiGroups: ["networking.k8s.io/v1"]
+  resources: ["ingress"]
+  verbs: ["create", "update", "get", "list", "watch", "patch", "delete"]
