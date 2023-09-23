@@ -1,0 +1,38 @@
+import psycopg2
+
+
+def create_database_if_not_exists(host, db_name, username, passwd):
+    conn = None
+    try:
+        conn = psycopg2.connect(host=host, user=username, password=passwd)
+        conn.autocommit = True
+        with conn.cursor() as cur:
+            cur.execute(f"select from pg_database where datname = '{db_name}'")
+            if len(cur.fetchall()) == 0:
+                cur.execute(f"CREATE DATABASE {db_name}")
+    except Exception as err:
+        print("DB error:", err)
+        raise err
+    finally:
+        if conn:
+            conn.close()
+
+
+def create_example_table_if_not_exists(host, db_name, table, username, passwd):
+    conn = None
+    try:
+        conn = psycopg2.connect(
+            host=host, user=username, password=passwd, dbname=db_name
+        )
+        conn.autocommit = True
+        with conn.cursor() as cur:
+            cur.execute(
+                f"CREATE TABLE IF NOT EXISTS {table}"
+                + " (id serial PRIMARY KEY, num integer, data varchar);"
+            )
+    except Exception as err:
+        print("DB error:", err)
+        raise err
+    finally:
+        if conn:
+            conn.close()
