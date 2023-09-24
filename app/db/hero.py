@@ -2,6 +2,8 @@ from typing import Optional
 
 from sqlmodel import Field, Session, SQLModel, select
 
+from app.db.initialize import __ENG__
+
 
 class Hero(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -21,5 +23,3 @@ def get_hero(name: str) -> Hero | None:
         stm = select(Hero).where(Hero.name == name)
         hero = session.exec(stm).first()
         return hero
-
-
