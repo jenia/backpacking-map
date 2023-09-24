@@ -2,7 +2,7 @@ from typing import Optional
 
 from sqlmodel import Field, Session, SQLModel, select
 
-from app.db.initialize import _ENG_
+from .initialize import _ENG_
 
 
 class Hero(SQLModel, table=True):

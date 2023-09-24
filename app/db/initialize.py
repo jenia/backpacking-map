@@ -2,6 +2,7 @@ import psycopg2
 from sqlalchemy.engine import URL
 from sqlmodel import SQLModel, create_engine
 
+_ENG_ = None
 
 class DB:
     def __init__(
