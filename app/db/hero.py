@@ -24,7 +24,6 @@ class DB:
     def __init__(
         self, host="127.0.0.1", database="test00", username="postgres", password=""
     ):
-        url_object = f"postgresql://{password}:{username}@{host}:5432/{database}"
         url_object = URL.create(
             "postgresql+psycopg2",
             username=username,
