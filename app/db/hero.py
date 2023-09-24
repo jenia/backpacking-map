@@ -1,7 +1,10 @@
 from typing import Optional
-from app.db import create_database_if_not_exists
+
 from sqlalchemy.engine import URL
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+from app.db import create_database_if_not_exists
+
 
 class Hero(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -9,16 +12,19 @@ class Hero(SQLModel, table=True):
     secret_name: str
     age: int | None = None
 
+
 def insert_hero(hero: Hero) -> None:
     with Session(__ENG__) as session:
         session.add(hero)
         session.commit()
+
 
 def get_hero(name: str) -> Hero | None:
     with Session(__ENG__) as session:
         stm = select(Hero).where(Hero.name == name)
         hero = session.exec(stm).first()
         return hero
+
 
 class DB:
     def __init__(
