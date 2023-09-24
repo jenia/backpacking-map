@@ -1,8 +1,3 @@
-from fastapi import FastAPI
+from app.http.endpoints import get_http_server
 
-app = FastAPI()
-
-
-@app.get("/")
-async def main_route():
-    return {"message": "Hey, It is Evgeniy from Docker on the 28th"}
+app = get_http_server

@@ -2,7 +2,7 @@ from typing import Optional
 
 from sqlmodel import Field, Session, SQLModel, select
 
-from app.db.initialize import __ENG__
+from app.db.initialize import _ENG_
 
 
 class Hero(SQLModel, table=True):
@@ -13,13 +13,13 @@ class Hero(SQLModel, table=True):
 
 
 def insert_hero(hero: Hero) -> None:
-    with Session(__ENG__) as session:
+    with Session(_ENG_) as session:
         session.add(hero)
         session.commit()
 
 
 def get_hero(name: str) -> Hero | None:
-    with Session(__ENG__) as session:
+    with Session(_ENG_) as session:
         stm = select(Hero).where(Hero.name == name)
         hero = session.exec(stm).first()
         return hero

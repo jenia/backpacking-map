@@ -16,9 +16,10 @@ class DB:
         )
 
         create_database_if_not_exists(host, database, username, password)
-        global __ENG__
-        __ENG__ = create_engine(url_object)
-        SQLModel.metadata.create_all(__ENG__)
+        global _ENG_
+        _ENG_ = create_engine(url_object)
+        SQLModel.metadata.create_all(_ENG_)
+
 
 def create_database_if_not_exists(host, db_name, username, passwd):
     conn = None
