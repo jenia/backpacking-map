@@ -124,4 +124,3 @@ class TestInitializeDatabase(unittest.TestCase):
             print(f"\n\n len rows: {lenRows}")
             if len(rows) != 1:
                 self.fail(f"table {self.table_name_wanted} does not exist")
-

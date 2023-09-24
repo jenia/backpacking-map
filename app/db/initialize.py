@@ -1,5 +1,24 @@
 import psycopg2
+from sqlalchemy.engine import URL
+from sqlmodel import SQLModel, create_engine
 
+
+class DB:
+    def __init__(
+        self, host="127.0.0.1", database="test00", username="postgres", password=""
+    ):
+        url_object = URL.create(
+            "postgresql+psycopg2",
+            username=username,
+            password=password,
+            host=host,
+            database=database,
+        )
+
+        create_database_if_not_exists(host, database, username, password)
+        global __ENG__
+        __ENG__ = create_engine(url_object)
+        SQLModel.metadata.create_all(__ENG__)
 
 def create_database_if_not_exists(host, db_name, username, passwd):
     conn = None

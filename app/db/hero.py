@@ -1,9 +1,6 @@
 from typing import Optional
 
-from sqlalchemy.engine import URL
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-
-from app.db import create_database_if_not_exists
+from sqlmodel import Field, Session, SQLModel, select
 
 
 class Hero(SQLModel, table=True):
@@ -26,19 +23,3 @@ def get_hero(name: str) -> Hero | None:
         return hero
 
 
-class DB:
-    def __init__(
-        self, host="127.0.0.1", database="test00", username="postgres", password=""
-    ):
-        url_object = URL.create(
-            "postgresql+psycopg2",
-            username=username,
-            password=password,
-            host=host,
-            database=database,
-        )
-
-        create_database_if_not_exists(host, database, username, password)
-        global __ENG__
-        __ENG__ = create_engine(url_object)
-        SQLModel.metadata.create_all(__ENG__)

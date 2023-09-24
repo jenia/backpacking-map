@@ -1,7 +1,5 @@
-from .initialize import (
-    create_database_if_not_exists,
-    create_example_table_if_not_exists,
-)
+from .hero import Hero, get_hero, insert_hero
+from .initialize import DB, create_database_if_not_exists
 
 eng = None
 def __init__():
