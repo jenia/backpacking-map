@@ -1,12 +1,12 @@
 import unittest
 from socket import getaddrinfo
-from unittest.mock import patch
+from unittest import mock
 
 from app.example import resolve_postgres
 
 
 class TestStringMethods(unittest.TestCase):
-    @patch("app.example.getaddrinfo")
+    @mock.patch("app.example.getaddrinfo")
     def given_stateful_service_when_one_service_exists_then_return_service_ip(
         self, test_patch
     ):

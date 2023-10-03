@@ -3,7 +3,10 @@ from functools import wraps
 
 import psycopg2
 
-import app.db as db
+from app.db.initialize import (
+    create_database_if_not_exists,
+    create_example_table_if_not_exists,
+)
 
 """
 TODO: These tests will fail in the pipeline because of the `host`.
@@ -36,10 +39,10 @@ class TestInitializeDatabase(unittest.TestCase):
                 )
                 conn.autocommit = True
                 try:
-                    db.create_database_if_not_exists(
+                    create_database_if_not_exists(
                         "127.0.0.1", self.database_wanted, "postgres", ""
                     )
-                    db.create_example_table_if_not_exists(
+                    create_example_table_if_not_exists(
                         "127.0.0.1",
                         self.database_wanted,
                         self.table_name_wanted,
@@ -60,6 +63,7 @@ class TestInitializeDatabase(unittest.TestCase):
         conn = None
         conn = psycopg2.connect(host="127.0.0.1", user="postgres")
         conn.autocommit = True
+        db_wanted = "dbwanted00"
 
         try:
             with conn.cursor() as cur0:
@@ -67,26 +71,26 @@ class TestInitializeDatabase(unittest.TestCase):
                 cur0.execute(
                     (
                         "select from pg_database where datname"
-                        + f" = '{self.database_wanted}'"
+                        + f" = '{db_wanted}'"
                     )
                 )
                 rows = cur0.fetchall()
                 if len(rows) != 0:
-                    cur0.execute(f"DROP DATABASE {self.database_wanted}")
+                    cur0.execute(f"DROP DATABASE {db_wanted}")
 
                 # test
-                db.create_database_if_not_exists(
-                    "127.0.0.1", self.database_wanted, "postgres", ""
+                create_database_if_not_exists(
+                    "127.0.0.1", db_wanted, "postgres", ""
                 )
 
                 # verify
                 cur0.execute(
                     "select from pg_database where datname"
-                    + f" ='{self.database_wanted}'"
+                    + f" ='{db_wanted}'"
                 )
                 rows = cur0.fetchall()
                 if len(rows) != 1:
-                    failMsg = f"database {self.database_wanted} does not exist"
+                    failMsg = f"database {db_wanted} does not exist"
                     self.fail(failMsg)
         finally:
             if conn:
@@ -102,7 +106,7 @@ class TestInitializeDatabase(unittest.TestCase):
             cur0.execute(f"DROP TABLE IF EXISTS {self.table_name_wanted}")
 
             # test
-            db.create_example_table_if_not_exists(
+            create_example_table_if_not_exists(
                 "127.0.0.1",
                 self.database_wanted,
                 self.table_name_wanted,

@@ -1,5 +1,17 @@
-from app.db.initialize import DB
-from app.http.endpoints import get_http_server
+import uvicorn
+from fastapi import FastAPI
 
-DB()
-app = get_http_server
+from app import db, http
+
+db0 = db.DB()
+server = http.HTTPServer(db0)
+app = FastAPI()
+app.include_router(server._router)
+
+
+def start():
+    """Launched with `poetry run start` at root level"""
+    uvicorn.run("main:app", host="0.0.0.0", port=80, reload=True)
+
+
+# 9G-Okh0EnFYcZLFN

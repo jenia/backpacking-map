@@ -1,25 +1,26 @@
-from collections.abc import Callable
+import pdb
 
-from fastapi import FastAPI
+import fastapi
 
-from app.db.hero import Hero, get_hero, insert_hero
-
-http_server = FastAPI()
-
-insert_hero_inter: Callable[[Hero], None] = insert_hero
-get_hero_inter: Callable[[str], Hero | None] = get_hero
-
-@http_server.get("/hero/{hero_name}")
-async def get_hero_endpoint(name: str):
-    hero = get_hero_inter(name)
-    return hero
+from app import db
 
 
-@http_server.post("/hero")
-async def post_hero_endpoint(hero: Hero):
-    insert_hero_inter(hero)
-    return hero
+class HTTPServer:
+    def __init__(self, db):
+        self._router: fastapi.APIRouter = fastapi.APIRouter()
+        self._db0 = db
+        self._router.add_api_route(
+            "/hero/{hero_name}",
+            self.get_hero_endpoint,
+            methods=["GET"],
+        )
+        self._router.add_api_route(
+            "/hero", self.post_hero_endpoint, methods=["POST"], status_code=201
+        )
 
+    def get_hero_endpoint(self, hero_name: str):
+        hero = db.get_hero(hero_name, self._db0)
+        return hero
 
-def get_http_server() -> FastAPI:
-    return http_server
+    async def post_hero_endpoint(self, hero: db.Hero):
+        db.insert_hero(hero, self._db0)
