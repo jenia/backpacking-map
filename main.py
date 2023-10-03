@@ -14,4 +14,5 @@ def start():
     uvicorn.run("main:app", host="0.0.0.0", port=80, reload=True)
 
 
-# 9G-Okh0EnFYcZLFN
+if __name__ ==  "__main__":
+    start()

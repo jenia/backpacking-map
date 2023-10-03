@@ -7,6 +7,7 @@ group "default" {
 }
 
 target "backpacking-app" {
+  target = "runtime"
   dockerfile = "Dockerfile"
   tags = ["localhost:5000/example-app:${TAG}"]
 }
