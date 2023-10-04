@@ -15,8 +15,9 @@ spec:
         app: example
     spec:
       containers:
-      - name: nginx
+      - name: backpacking-map
         image: eugene2022/backpacking-map:latest
+        imagePullPolicy: Always
         ports:
         - name: web
           containerPort: 80
