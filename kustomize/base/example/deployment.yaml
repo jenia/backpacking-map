@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: localhost:5000/example-app:latest
+        image: eugene2022/backpacking-map:latest
         ports:
         - name: web
           containerPort: 80
