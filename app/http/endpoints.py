@@ -1,5 +1,3 @@
-import pdb
-
 import fastapi
 
 from app import db
@@ -17,6 +15,11 @@ class HTTPServer:
         self._router.add_api_route(
             "/hero", self.post_hero_endpoint, methods=["POST"], status_code=201
         )
+        self._router.add_api_route(
+            "/version",
+            self.get_version,
+            methods=["GET"],
+        )
 
     def get_hero_endpoint(self, hero_name: str):
         hero = db.get_hero(hero_name, self._db0)
@@ -24,3 +27,6 @@ class HTTPServer:
 
     async def post_hero_endpoint(self, hero: db.Hero):
         db.insert_hero(hero, self._db0)
+
+    async def get_version(self):
+        return {"version": "1"}
