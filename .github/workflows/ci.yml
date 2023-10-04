@@ -40,5 +40,5 @@ jobs:
           push: true
           tags: >-
             eugene2022/backpacking-map:latest,
-            eugene2022/backpacking-map:${{ github.run_number }}
+            eugene2022/backpacking-map:${{ github.sha }}
           target: runtime
