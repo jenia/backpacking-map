@@ -11,7 +11,7 @@ app.include_router(server._router)
 
 def start():
     """Launched with `poetry run start` at root level"""
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=80, reload=False)
 
 
 if __name__ == "__main__":
