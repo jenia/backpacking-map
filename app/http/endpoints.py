@@ -25,9 +25,9 @@ class HTTPServer:
 
     def get_hero_endpoint(self, hero_name: str):
         logger = logging.getLogger(__name__)
-        logger.debug("get hero %s", hero_name)
+        logger.error("get hero %s", hero_name)
         hero = db.get_hero(hero_name, self._db0)
-        return hero
+        return {"x": "y", "hero": hero}
 
     async def post_hero_endpoint(self, hero: db.Hero):
         db.insert_hero(hero, self._db0)
