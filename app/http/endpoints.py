@@ -1,7 +1,6 @@
+import logging
+
 import fastapi
-import opentelemetry.sdk.trace as ot_trace
-import opentelemetry.sdk.trace.export as ot_export
-from opentelemetry import trace
 
 from app import db
 
@@ -23,16 +22,12 @@ class HTTPServer:
             self.get_version,
             methods=["GET"],
         )
-        trace.set_tracer_provider(ot_trace.TracerProvider())
-        trace.get_tracer_provider().add_span_processor(
-            ot_export.BatchSpanProcessor(ot_export.ConsoleSpanExporter())
-        )
-        self.tracer = trace.get_tracer(__name__)
 
     def get_hero_endpoint(self, hero_name: str):
-        with self.tracer.start_as_current_span("foo"):
-            hero = db.get_hero(hero_name, self._db0)
-            return hero
+        logger = logging.getLogger(__name__)
+        logger.debug("get hero %s", hero_name)
+        hero = db.get_hero(hero_name, self._db0)
+        return hero
 
     async def post_hero_endpoint(self, hero: db.Hero):
         db.insert_hero(hero, self._db0)

@@ -1,7 +1,12 @@
+import logging
+
 import uvicorn
 from fastapi import FastAPI
 
 from app import db, http
+
+FORMAT = '%(asctime)s %(pathname)s %(clientip)-15s %(message)s'
+logging.basicConfig(format=FORMAT)
 
 db0 = db.DB()
 server = http.HTTPServer(db0)
