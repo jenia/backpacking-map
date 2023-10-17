@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from app import db, http
 
 FORMAT = '%(asctime)s %(pathname)s %(message)s'
-logging.basicConfig(format=FORMAT)
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 db0 = db.DB()
 server = http.HTTPServer(db0)
