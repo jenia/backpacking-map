@@ -5,7 +5,7 @@ from fastapi import FastAPI
 
 from app import db, http
 
-FORMAT = '%(levelname)s:  \t%(asctime)s %(pathname)s:%(lineno)d %(message)s'
+FORMAT = '%(levelname)s: %(asctime)s %(pathname)s:%(lineno)d %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 db0 = db.DB()
