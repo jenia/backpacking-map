@@ -7,7 +7,7 @@ from app.example import resolve_postgres
 
 class TestStringMethods(unittest.TestCase):
     @mock.patch("app.example.getaddrinfo")
-    def given_stateful_service_when_one_service_exists_then_return_service_ip(
+    def test_given_stateful_service_when_one_service_exists_then_return_service_ip(
         self, test_patch
     ):
         service = "google.com"
